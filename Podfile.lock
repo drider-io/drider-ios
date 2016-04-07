@@ -1,0 +1,13 @@
+PODS:
+  - AMPopTip (0.10.2)
+  - Starscream (1.1.3)
+
+DEPENDENCIES:
+  - AMPopTip
+  - Starscream (~> 1.1.3)
+
+SPEC CHECKSUMS:
+  AMPopTip: 0788a9452806049e3aa0d6d09324606fc41ea646
+  Starscream: d662732354b40dd19ed1ece3e3c44c80b536b83c
+
+COCOAPODS: 0.39.0
