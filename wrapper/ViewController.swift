@@ -119,7 +119,7 @@ class ViewController: UIViewController, WKScriptMessageHandler, WKNavigationDele
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.batteryStateDidChange(_:)), name: UIDeviceBatteryStateDidChangeNotification, object: nil)
         TSPower.tintColor = UIColor.yellowColor();
         NSNotificationCenter.defaultCenter().postNotificationName(UIDeviceBatteryStateDidChangeNotification, object: nil)
-        let url = NSURL (string:getHomeURL());
+        let url = NSURL (string:getStartLocation());
         let requestObj = NSURLRequest(URL: url!);
 //        UIView.setAnimationsEnabled(false)
         webView!.navigationDelegate = self
@@ -261,6 +261,19 @@ class ViewController: UIViewController, WKScriptMessageHandler, WKNavigationDele
     }
 
 
+    func getStartLocation()->String{
+        let authentication_token = NSUserDefaults.standardUserDefaults().stringForKey("authentication_token")
+        if (nil != authentication_token){
+            return getHomeURL()
+        } else {
+#if DEVELOPMENT
+            return "http://drider.dev:4000/policy?client=ios"
+#else
+            return "http://drider.io/?client=ios"
+#endif
+        }
+    }
+    
     func getHomeURL()->String{
 #if DEVELOPMENT
         let url = "http://drider.dev:4000/?client=ios"
