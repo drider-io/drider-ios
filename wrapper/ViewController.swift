@@ -38,6 +38,7 @@ class ViewController: UIViewController, WKScriptMessageHandler, WKNavigationDele
     var locationManager: CLLocationManager = CLLocationManager()
     
     var popTip: AMPopTip?
+    var actInd : UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(0,0, 100, 100)) as UIActivityIndicatorView
 
     @IBAction func TSPowerClick(sender: AnyObject?) {
         popTip?.hide()
@@ -143,6 +144,11 @@ class ViewController: UIViewController, WKScriptMessageHandler, WKNavigationDele
         popTip?.shouldDismissOnTap = true
         popTip?.offset = 17
         popTip?.popoverColor = UIColor.orangeColor()
+        
+        actInd.center = self.view.center
+        actInd.hidesWhenStopped = true
+        actInd.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(actInd)
     }
 
     func batteryStateDidChange(notification: NSNotification) {
@@ -227,11 +233,15 @@ class ViewController: UIViewController, WKScriptMessageHandler, WKNavigationDele
     }
     
     func webView(webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        webView.hidden = true
+        actInd.startAnimating()
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     }
     
     
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        webView.hidden = false
+        actInd.stopAnimating()
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
 
